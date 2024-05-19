@@ -7,6 +7,4 @@ st.set_page_config(
 )
 
 st.header("SQUICE")
-st.write(
-    "**Visualise and interpolate numerical matrix data**"
-)
+st.write("**Visualise and interpolate numerical matrix data**")
