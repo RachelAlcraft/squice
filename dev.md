@@ -6,9 +6,9 @@
 
 ## STREAMLIT APP
 ```
-/usr/bin/python3.12 -m venv .env-app
+python -m venv .env-sq-app
 ## Load dev environment
-source .env-app/bin/activate
+source .env-sq-app/bin/activate
 (deactivate to exit venv)
 pip install --upgrade pip
 pip install -r requirements.txt --upgrade
@@ -23,9 +23,9 @@ https://share.streamlit.io/
 
 ## Pypi library
 ```
-/usr/bin/python3.12 -m venv .env-lib
+python -m venv .env-sq-lib
 ## Load dev environment
-source .env-lib/bin/activate
+source .env-sq-lib/bin/activate
 (deactivate to exit venv)
 pip install --upgrade pip
 pip install -r requirements_lib.txt --upgrade

@@ -161,3 +161,5 @@ cython_debug/
 #.idea/
 lib/docs/api/*
 docs/api/*
+.env-sq-app/*
+.env-sq-lib/*

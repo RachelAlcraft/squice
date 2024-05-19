@@ -4,7 +4,7 @@ import inspect
 from pathlib import Path
 
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent), ""))
-from app_lib_py import ClassCurves as cc
+from squice import ClassCurves as cc
 
 
 # ---------------------------------------------------------------------------

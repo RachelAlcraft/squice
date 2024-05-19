@@ -1,3 +1,3 @@
-# APP-LIB-PY
+# SQUICE
 
-Scientific library example
+Scientific library for visualisation and interpolation of numerical matrix data
