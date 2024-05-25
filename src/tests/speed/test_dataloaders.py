@@ -6,8 +6,8 @@ import sys
 DIR = dirname(abspath(__file__))
 sys.path.append((DIR))
 print("Loading to path",(DIR))
-import help_speed as hs
-import squice.DataLoaders as dl
+import help_speed as hs # noqa: E402
+import squice.DataLoaders as dl # noqa: E402
 
 
 

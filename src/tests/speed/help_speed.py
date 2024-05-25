@@ -2,8 +2,8 @@
 import pandas as pd
 import datetime
 from os.path import dirname, abspath
-DIR = dirname(abspath(__file__))
 import sys
+DIR = dirname(abspath(__file__))
 sys.path.append(dirname(dirname(DIR)))
 print("Loading to path",dirname(dirname(DIR)))
 
