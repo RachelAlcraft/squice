@@ -6,7 +6,7 @@
 
 ## STREAMLIT APP
 ```
-python -m venv .env-sq-app
+/bin/python3.12 -m venv .env-sq-app
 ## Load dev environment
 source .env-sq-app/bin/activate
 (deactivate to exit venv)
@@ -23,7 +23,7 @@ https://share.streamlit.io/
 
 ## Pypi library
 ```
-python -m venv .env-sq-lib
+/bin/python3.12 -m venv .env-sq-lib
 ## Load dev environment
 source .env-sq-lib/bin/activate
 (deactivate to exit venv)
