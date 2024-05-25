@@ -1,6 +1,7 @@
 """
 Test the speed of data loaders
 """
+
 from os.path import dirname, abspath
 import sys
 

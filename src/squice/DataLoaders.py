@@ -5,6 +5,7 @@ Module to load different data fromats from file and convert into a numpy matrix
 from abc import ABC, abstractmethod
 import numpy as np
 
+
 ####################################################################################
 class DataLoader(ABC):
     """Abstract class to load data from file and convert to a numpy matrix"""

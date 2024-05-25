@@ -31,6 +31,14 @@ pip install --upgrade pip
 pip install -r requirements_lib.txt --upgrade
 ```
 
+## Pre-commit
+
+The pre-commit hook shyuld run on check in to format files as per standards.
+```
+pre-commit run --all-files
+black ./ --check --line-length 88 --diff
+black ./ --line-length 88
+```
 ---
 
 # Debugging
