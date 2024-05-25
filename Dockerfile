@@ -3,12 +3,12 @@
 #######################################################################################################
 ### To build this manually ###
 # docker build -f Dockerfile -t raea/squice .
-# 
+#
 ### To run it manually ###
 # docker run --rm --name squice -p 8001:8501 raea/squice
 #
 # I can then be found at http://localhost:8201/
-# 
+#
 ### To push it manually ###
 # docker push raea/squice
 ######################################################################################################
