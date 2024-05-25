@@ -3,7 +3,6 @@ Module to interpolate inside a numpy matrix with some bespoke methods
 """
 
 from abc import ABC, abstractmethod
-import numpy as np
 from DataLoaders import NumpyNow
 
 

@@ -1,8 +1,6 @@
 """
 Module to interpolate inside a numpy matrix with some bespoke methods
 """
-import numpy as np
-from DataLoaders import NumpyNow
 
 
 ####################################################################################
