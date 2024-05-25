@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>squice.DataLoaders.ElectronDensityCcp4</title>
+    <title>squice.DataLoaders.NumpyNow</title>
     <meta name="generator" content="pydoctor 24.3.3"> 
         
     </meta>
@@ -73,7 +73,7 @@
 
       <div class="thingTitle">
         <span>Class</span>
-        <code class="thisobject"><a href="squice.DataLoaders.ElectronDensityCcp4.html" class="internal-link" title="This class"><wbr></wbr>Electron<wbr></wbr>Density<wbr></wbr>Ccp4</a></code> 
+        <code class="thisobject"><a href="squice.DataLoaders.NumpyNow.html" class="internal-link" title="This class"><wbr></wbr>Numpy<wbr></wbr>Now</a></code> 
       </div>
       
       <div>
@@ -94,7 +94,7 @@
         
 
         
-            <div class="itemName"><code><a href="#load" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4.load">load</a></code>
+            <div class="itemName"><code><a href="#load" class="internal-link" title="squice.DataLoaders.NumpyNow.load">load</a></code>
             </div>
         
 
@@ -126,28 +126,55 @@
         
 
         
-            <div class="itemName"><code><a href="#mtx" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4.mtx">mtx</a></code>
+            <div class="itemName"><code><a href="#filedata" class="internal-link" title="squice.DataLoaders.NumpyNow.filedata">filedata</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#mtx" class="internal-link" title="squice.DataLoaders.NumpyNow.mtx">mtx</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#numa" class="internal-link" title="squice.DataLoaders.NumpyNow.numa">numa</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#numb" class="internal-link" title="squice.DataLoaders.NumpyNow.numb">numb</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#numc" class="internal-link" title="squice.DataLoaders.NumpyNow.numc">numc</a></code>
             </div>
         
 
     </li>
 </ul> 
 
-        <div class="childrenKindTitle">Inherited Attributes</div>
-        <ul>
-    
-    <li class="">
         
-        
-        
-
-        
-            <div class="itemName"><code><a href="squice.DataLoaders.DataLoader.html#filedata" class="internal-link" title="squice.DataLoaders.DataLoader.filedata">filedata</a></code>
-            </div>
-        
-
-    </li>
-</ul> 
+         
         
       </div>
   </div><div>
@@ -176,7 +203,7 @@
             </div>
         
 
-    </li><li class=" thisobject">
+    </li><li class="">
         
         
         
@@ -196,7 +223,7 @@
             </div>
         
 
-    </li><li class="">
+    </li><li class=" thisobject">
         
         
         
@@ -305,7 +332,7 @@
         </div>
 
         <div class="page-header">
-          <h1 class="class"><code><code><a href="index.html" class="internal-link">squice</a></code><wbr></wbr>.<code><a href="squice.DataLoaders.html" class="internal-link" title="squice.DataLoaders">DataLoaders</a></code><wbr></wbr>.<code><a href="squice.DataLoaders.ElectronDensityCcp4.html" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4">ElectronDensityCcp4</a></code></code></h1>
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">squice</a></code><wbr></wbr>.<code><a href="squice.DataLoaders.html" class="internal-link" title="squice.DataLoaders">DataLoaders</a></code><wbr></wbr>.<code><a href="squice.DataLoaders.NumpyNow.html" class="internal-link" title="squice.DataLoaders.NumpyNow">NumpyNow</a></code></code></h1>
           <div id="showPrivate">
             <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
           </div>
@@ -316,27 +343,54 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">ElectronDensityCcp4</span>(<a href="squice.DataLoaders.DataLoader.html" class="internal-link" title="squice.DataLoaders.DataLoader">DataLoader</a>):</code></p><p>Constructor: <code><a href="squice.DataLoaders.DataLoader.html#__init__" class="internal-link" title="squice.DataLoaders.DataLoader.__init__">ElectronDensityCcp4(filedata)</a></code></p>
-          <p><a href="classIndex.html#squice.DataLoaders.ElectronDensityCcp4">View In Hierarchy</a></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">NumpyNow</span>(<a href="squice.DataLoaders.DataLoader.html" class="internal-link" title="squice.DataLoaders.DataLoader">DataLoader</a>):</code></p><p>Constructor: <code><a href="squice.DataLoaders.DataLoader.html#__init__" class="internal-link" title="squice.DataLoaders.DataLoader.__init__">NumpyNow(filedata)</a></code></p>
+          <p><a href="classIndex.html#squice.DataLoaders.NumpyNow">View In Hierarchy</a></p>
         </div>
 
         <div class="moduleDocstring">
-          <div><p>Class to load electron density in the ccp4 format</p></div>
+          <div><p>Class to create a numpy matrix inline. The format of the uploaded data is (note the commas are the delim,sapce is for visuals) [[[1,2,3], [4, 5, 6]],</p>
+<p>[[7,  8,  9], [10, 11, 12]]] self.mtx = np.fromstring('1,2,3,4,5,6,7,8,9,10,11,12', dtype=int, sep=',').reshape([2,2,3])</p>
+<p>[[[1, 2], [3, 4], [5, 6]],</p>
+<p>[[7, 8], [9, 10], [11, 12]]] self.mtx = np.fromstring('1,2,3,4,5,6,7,8,9,10,11,12', dtype=int, sep=',').reshape([2,3,2])</p>
+<p>[[[1, 2], [3, 4]],</p>
+<p>[[5, 6], [7, 8]],</p>
+<p>[[9, 10], [11, 12]]] self.mtx = np.fromstring('1,2,3,4,5,6,7,8,9,10,11,12', dtype=int, sep=',').reshape([3,2,2])</p>
+</div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id8">
+          <table class="children sortable" id="id4">
   
   
   <tr class="method">
     
     <td>Method</td>
-    <td><code><a href="#load" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4.load">load</a></code></td>
-    <td>Load the numpy data</td>
+    <td><code><a href="#load" class="internal-link" title="squice.DataLoaders.NumpyNow.load">load</a></code></td>
+    <td>Load the numpy data from a formatted string of 3d data that must pass the checks for [[[1,2],[3,4]],[[5,6],[7,8]]]</td>
   </tr><tr class="instancevariable">
     
     <td>Instance Variable</td>
-    <td><code><a href="#mtx" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4.mtx">mtx</a></code></td>
+    <td><code><a href="#filedata" class="internal-link" title="squice.DataLoaders.NumpyNow.filedata">filedata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#mtx" class="internal-link" title="squice.DataLoaders.NumpyNow.mtx">mtx</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#numa" class="internal-link" title="squice.DataLoaders.NumpyNow.numa">numa</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#numb" class="internal-link" title="squice.DataLoaders.NumpyNow.numb">numb</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#numc" class="internal-link" title="squice.DataLoaders.NumpyNow.numc">numc</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -344,18 +398,13 @@
             <p class="inheritedFrom">
               Inherited from <code><a href="squice.DataLoaders.DataLoader.html" class="internal-link" title="squice.DataLoaders.DataLoader">DataLoader</a></code>:
             </p>
-            <table class="children sortable" id="id9">
+            <table class="children sortable" id="id5">
   
   
   <tr class="basemethod">
     
     <td>Method</td>
     <td><code><a href="squice.DataLoaders.DataLoader.html#__init__" class="internal-link" title="squice.DataLoaders.DataLoader.__init__">__init__</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="baseinstancevariable">
-    
-    <td>Instance Variable</td>
-    <td><code><a href="squice.DataLoaders.DataLoader.html#filedata" class="internal-link" title="squice.DataLoaders.DataLoader.filedata">filedata</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -368,7 +417,7 @@
           <div class="basemethod">
   
   
-  <a name="squice.DataLoaders.ElectronDensityCcp4.load">
+  <a name="squice.DataLoaders.NumpyNow.load">
     
   </a>
   <a name="load">
@@ -379,7 +428,7 @@
     
     <span class="py-keyword">def</span> <span class="py-defname">load</span><span class="function-signature">(self)</span>:
     
-    <a class="headerLink" href="#load" title="squice.DataLoaders.ElectronDensityCcp4.load">
+    <a class="headerLink" href="#load" title="squice.DataLoaders.NumpyNow.load">
       
       
       ¶
@@ -387,12 +436,36 @@
   </div>
   <div class="docstring functionBody">
     <div class="interfaceinfo">overrides <code><a href="squice.DataLoaders.DataLoader.html#load" class="internal-link">squice.DataLoaders.DataLoader.load</a></code></div>
-    <div><p>Load the numpy data</p></div>
+    <div><p>Load the numpy data from a formatted string of 3d data that must pass the checks for [[[1,2],[3,4]],[[5,6],[7,8]]]</p></div>
   </div>
 </div><div class="baseinstancevariable">
   
   
-  <a name="squice.DataLoaders.ElectronDensityCcp4.mtx">
+  <a name="squice.DataLoaders.NumpyNow.filedata">
+    
+  </a>
+  <a name="filedata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">filedata</span> =
+    
+    <a class="headerLink" href="#filedata" title="squice.DataLoaders.NumpyNow.filedata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    <div class="interfaceinfo">overrides <code><a href="squice.DataLoaders.DataLoader.html#filedata" class="internal-link">squice.DataLoaders.DataLoader.filedata</a></code></div>
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="squice.DataLoaders.NumpyNow.mtx">
     
   </a>
   <a name="mtx">
@@ -402,7 +475,7 @@
     
     <span class="py-defname">mtx</span> =
     
-    <a class="headerLink" href="#mtx" title="squice.DataLoaders.ElectronDensityCcp4.mtx">
+    <a class="headerLink" href="#mtx" title="squice.DataLoaders.NumpyNow.mtx">
       
       
       ¶
@@ -410,6 +483,78 @@
   </div>
   <div class="functionBody">
     <div class="interfaceinfo">overrides <code><a href="squice.DataLoaders.DataLoader.html#mtx" class="internal-link">squice.DataLoaders.DataLoader.mtx</a></code></div>
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="squice.DataLoaders.NumpyNow.numa">
+    
+  </a>
+  <a name="numa">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">numa</span> =
+    
+    <a class="headerLink" href="#numa" title="squice.DataLoaders.NumpyNow.numa">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="squice.DataLoaders.NumpyNow.numb">
+    
+  </a>
+  <a name="numb">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">numb</span> =
+    
+    <a class="headerLink" href="#numb" title="squice.DataLoaders.NumpyNow.numb">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="squice.DataLoaders.NumpyNow.numc">
+    
+  </a>
+  <a name="numc">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">numc</span> =
+    
+    <a class="headerLink" href="#numc" title="squice.DataLoaders.NumpyNow.numc">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
