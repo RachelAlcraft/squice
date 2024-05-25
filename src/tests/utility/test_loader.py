@@ -14,7 +14,7 @@ print(DIR)
 
 
 # ---------------------------------------------------------------------------
-def test_numpy():
+def test_numpyfile():
     print(f"Testing utility: {inspect.stack()[0][3]}")
     npf = cc.NumpyFile(f"{DIR}/data/data1.npy")
     npf.load()
@@ -26,7 +26,32 @@ def test_numpy():
     assert npf.mtx[2][2] == 9, npf.mtx[2][2]
 
 
+def test_numpyfile3d():
+    print(f"Testing utility: {inspect.stack()[0][3]}")
+    npf = cc.NumpyFile(f"{DIR}/data/data1.npy")
+    npf.load()
+    print(npf.mtx)
+    assert npf.mtx[0][0][0] == 1, npf.mtx[0][0][0]
+
+
+def test_numpynow():
+    print(f"Testing utility: {inspect.stack()[0][3]}")
+    datas = []
+    datas.append("[[[1,2], [3,4]], [[5,6], [7,8]]]")
+    datas.append("[[[1,2,0], [3,4,0]], [[5,6,0], [7,8,0]]]")
+    datas.append("[[[1,2],[3,4],[3,4]], [[5,6],[7,8],[7,8]]]")
+    datas.append(
+        "[[[1,2],[3,4],[3,4]], [[5,6],[7,8],[7,8]], [[5,6],[7,8],[7,8]], [[5,6],[7,8],[7,8]]]"
+    )
+
+    for dt in datas:
+        print(dt)
+        npf = cc.NumpyNow(dt)
+        npf.load()
+        assert npf.mtx[0][0][0] == 1, npf.mtx[0][0][0]
+
+
 ###########################################################################
 if __name__ == "__main__":
-    test_numpy()
-    # test_squared()
+    # test_numpyfile()
+    test_numpynow()
