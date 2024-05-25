@@ -28,7 +28,7 @@ def test_numpyfile():
 
 def test_numpyfile3d():
     print(f"Testing utility: {inspect.stack()[0][3]}")
-    npf = cc.NumpyFile(f"{DIR}/data/data1.npy")
+    npf = cc.NumpyFile(f"{DIR}/data/data3d.npy")
     npf.load()
     print(npf.mtx)
     assert npf.mtx[0][0][0] == 1, npf.mtx[0][0][0]
