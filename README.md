@@ -18,4 +18,8 @@ Note the application [squice@streamlit](https://squice.streamlit.app/) also show
 
 
 ### Use as a self-hosted web app
-This can also be downloaded from docker and self-hosted.
+This can also be [downloaded from docker](https://hub.docker.com/repository/docker/raea/squice/general) and self-hosted.
+```
+# docker pull raea/squice
+docker run --rm --name temp-name-p 8001:8501 raea/squice
+```
