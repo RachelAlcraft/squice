@@ -11,10 +11,9 @@ st.set_page_config(
 
 data_str = st.text_area(
     "Matrix",
-    """[[[0,1,3],[2,3,3]],
-[[0,1,3],[2,3,3]],
-[[0,1,3],[2,3,3]],
-[[0,1,3],[2,3,3]]]
+    """[[[0,0,0],[0,3,0],[0,0,0]],
+[[0,0,0],[3,5,0],[0,0,0]],
+[[0,0,0],[0,0,1],[0,0,0]]]
 """,
     height=200,
 ).strip()
@@ -59,7 +58,12 @@ c3 = "rgba(220,20,60,0.9)"
 c4 = "rgba(100,0,0,1)"
 
 
-colorscale = [(0, c0), (0.5, c1), (0.7, c2), (0.9, c3), (1, c4)]
+zero = 1 - (maxv / abs(maxv - minv))
+zer0 = max(0.01, zero)
+zer1 = max(zer0 * 1.5, 0.5)
+zer2 = max(zer0 * 1.9, 0.8)
+
+colorscale = [(0, c0), (zer0, c1), (zer1, c2), (zer2, c3), (1, c4)]
 
 fig = go.Figure(
     data=go.Isosurface(
