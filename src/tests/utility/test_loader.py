@@ -51,7 +51,22 @@ def test_numpynow():
         assert npf.mtx[0][0][0] == 1, npf.mtx[0][0][0]
 
 
+def test_numpynow_tabs_and_lines():
+    print(f"Testing utility: {inspect.stack()[0][3]}")
+    datas = []
+    datas.append(
+        "[[[1,2],[3,4],[3,4]], \t[[5,6],[7,8],[7,8]], \n[[5,6],[7,8],[7,8]],\t [[5,6],[7,8],[7,8]\n]]"
+    )
+
+    for dt in datas:
+        print(dt)
+        npf = cc.NumpyNow(dt)
+        npf.load()
+        assert npf.mtx[0][0][0] == 1, npf.mtx[0][0][0]
+
+
 ###########################################################################
 if __name__ == "__main__":
     # test_numpyfile()
-    test_numpynow()
+    # test_numpynow()
+    test_numpynow_tabs_and_lines()

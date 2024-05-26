@@ -63,6 +63,9 @@ class NumpyNow(DataLoader):
 
         # There must be the same number of [ as ]
         assert self.filedata.count("[") == self.filedata.count("]")
+        self.filedata = self.filedata.strip().replace(" ", "")
+        self.filedata = self.filedata.replace("\t", "")
+        self.filedata = self.filedata.replace("\n", "")
         assert self.filedata[:3] == "[[["
         assert self.filedata[-3:] == "]]]"
         self.filedata = self.filedata.replace(" ", "")
