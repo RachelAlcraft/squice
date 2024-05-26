@@ -1,5 +1,7 @@
 import streamlit as st
 from squice.DataLoaders import NumpyNow
+import plotly.graph_objs as go
+
 
 st.set_page_config(
     page_title="squice",
@@ -24,8 +26,6 @@ nn.load()
 with st.expander("Show mtx data"):
     st.write(nn.mtx)
 
-import plotly.graph_objs as go
-from plotly.subplots import make_subplots
 
 xs = []
 ys = []
@@ -41,7 +41,7 @@ for i in range(a):
             val = 0
             if k < c:
                 val = nn.mtx[i][j][k]
-                if minv == None:
+                if minv is None:
                     minv = val
                     maxv = val
                 else:
