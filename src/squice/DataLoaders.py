@@ -83,7 +83,7 @@ class NumpyNow(DataLoader):
         self.filedata = self.filedata.replace("]", "")
         self.filedata = self.filedata.replace("[", "")
         self.numc = int(len(self.filedata.split(",")) / (self.numa * self.numb))
-        self.mtx = np.fromstring(self.filedata, dtype=int, sep=",").reshape(
+        self.mtx = np.fromstring(self.filedata, dtype=float, sep=",").reshape(
             [self.numa, self.numb, self.numc]
         )
 

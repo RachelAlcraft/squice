@@ -31,6 +31,11 @@ pip install --upgrade pip
 pip install -r requirements_lib.txt --upgrade
 ```
 
+To install the lib locally while developing
+```
+pip install .
+```
+
 ## Pre-commit
 
 The pre-commit hook shyuld run on check in to format files as per standards.
