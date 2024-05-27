@@ -2,20 +2,17 @@ import sys
 import os
 import inspect
 from pathlib import Path
+from os.path import dirname, abspath
 
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent), ""))
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent), ""))
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent), "squice"))
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent.parent), ""))
+from squice import DataLoaders as dl  # noqa: E402
+from squice import MtxInterpolator as mi  # noqa: E402
+from squice import GridMaker as gm  # noqa: E402
+from squice import SpaceTransform as sp  # noqa: E402
 
-print(sys.path)
-from squice import DataLoaders as dl
-from squice import MtxInterpolator as mi
-from squice import GridMaker as gm
-from squice import SpaceTransform as sp
-
-from os.path import dirname, abspath
-import sys
 
 DIR = dirname(abspath(__file__))
 print(DIR)

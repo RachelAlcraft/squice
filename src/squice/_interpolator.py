@@ -10,6 +10,7 @@ from leuci_xyz import vectorthree as v3
 from leuci_xyz import matrix3d as d3
 import math
 import numpy as np
+from scipy.interpolate import RegularGridInterpolator
 
 # from . import invariant as ivm
 from . import iv1
@@ -301,9 +302,9 @@ class Interpolator(ABC):
             return self._orig[:, layer, :]
 
     def get_pos_from_fms(self, f, m, s, F=-1, M=-1, S=-1):
-        use_f, use_m, use_s = self._F, self._M, self._S
+        use_f, use_m = self._F, self._M
         if F + M + S != -3:
-            use_f, use_m, use_s = F, M, S
+            use_f, use_m = F, M
         slice_area = use_f * use_m
         pos = s * slice_area
         pos += use_f * m
@@ -649,7 +650,6 @@ class Nearest(Interpolator):
 ####################################################################################################
 ### NUMPY NEAREST
 ####################################################################################################
-from scipy.interpolate import RegularGridInterpolator
 
 
 class Numpest(Interpolator):
@@ -941,10 +941,10 @@ class Bspline(Interpolator):
         j = int(np.floor(round(u_y, self.round)) - np.floor(self.degree / 2))
         k = int(np.floor(round(u_z, self.round)) - np.floor(self.degree / 2))
 
-        for l in range(self.degree + 1):
-            xIndex[l] = i  # if 71.1 passed in, for linear, we would want 71 and 72,
-            yIndex[l] = j
-            zIndex[l] = k
+        for ll in range(self.degree + 1):
+            xIndex[ll] = i  # if 71.1 passed in, for linear, we would want 71 and 72,
+            yIndex[ll] = j
+            zIndex[ll] = k
             i, j, k = i + 1, j + 1, k + 1
         # /* compute the interpolation weights */
         if self.degree == 9:

@@ -162,7 +162,6 @@ class SpaceTransform(object):
         return pointPrime
 
     def convert_coords(self, unit_coords):
-        coords = []
         # 2d or 3d?
         if type(unit_coords) is d3.Matrix3d:
             return self.convert_coords3d(unit_coords)

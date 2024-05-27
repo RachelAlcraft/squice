@@ -4,7 +4,6 @@ This could be electron density data or numpy data.
 They feature header info followed by the boinary data.
 """
 from abc import ABC, abstractmethod
-import numpy as np
 
 ####################################################################################
 class BinaryFile(ABC):

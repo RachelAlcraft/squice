@@ -2,15 +2,11 @@
 GridMaker: makes a grid or chunk of points given the secified size and samples
 
 """
-import math
-import numpy as np
-
 from . import Matrix3d as d3
 
 
 class GridMaker(object):
     def get_unit_grid(self, width, samples, depth_samples=1):
-        side = int(math.floor(samples / 2))
         offset = (samples - 1) / 2
         gap = 1
         if samples > 1:
