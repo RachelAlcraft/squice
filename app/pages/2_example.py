@@ -18,9 +18,41 @@ st.set_page_config(
 
 st.title("SQUICE: Example")
 
+
+def grid_navigate(cmd, spc):
+    vcentral = spc.navigate(v3.VectorThree(abc=central), cmd, 0.1)
+    vlinear = spc.navigate(v3.VectorThree(abc=linear), cmd, 0.1)
+    vplanar = spc.navigate(v3.VectorThree(abc=planar), cmd, 0.1)
+    st.session_state["central"] = vcentral.to_coords_str()
+    st.session_state["linear"] = vlinear.to_coords_str()
+    st.session_state["planar"] = vplanar.to_coords_str()
+
+
+def set_c_l_p(xx, yy, zz):
+    st.session_state["central"] = f"({(xx-1)/2}, {(yy-1)/2}, {(zz-1)/2})"
+    st.session_state["linear"] = f"({xx-1}, {(yy-1)/2}, {(zz-1)/2})"
+    st.session_state["planar"] = f"({(xx-1)/2}, {yy-1}, {(zz-1)/2})"
+    st.session_state["width"] = min(xx, yy, zz) - 1
+    st.session_state["samples"] = 20  # min(xx,yy,zz)
+
+
+def return_to_centre(matrix):
+    xx, yy, zz = matrix.mtx.shape
+    # if we haven't initted values then they need defaults
+    if "return_centre" not in st.session_state:
+        print("Init values")
+        st.session_state["return_centre"] = False
+        set_c_l_p(xx, yy, zz)
+    # if we have a return to centre then we re-init certain values
+    if st.session_state["return_centre"]:
+        print("Return to centre")
+        set_c_l_p(xx, yy, zz)
+        st.session_state["return_centre"] = False
+
+
 MY_MTX = None
 
-tabData, tabAll, tabSlice, tabWedge = st.tabs(["data", "matrix", "slice", "chunk"])
+tabData, tabAll, tabSlice = st.tabs(["data", "matrix", "slice"])  # , "chunk"])
 with tabData:
 
     option = st.radio(
@@ -159,107 +191,200 @@ if MY_MTX is not None:
         st.plotly_chart(fig, use_container_width=True)
 
     with tabSlice:
+        return_to_centre(MY_MTX)
         st.write("### Slice through the matrix")
-        st.caption(
-            """To define a slice through an orthogonal grid,
-        we need to have 3 points to define a plane. These we will define as the points that are:
-        - central - linear  - planar
-        Additionally we need to know:
-        - width of the slice
-        - sample frequency
-        The width can be considered the zoom; the sample frequence, the resolution.
-        """
-        )
-        "---"
-        xx, yy, zz = MY_MTX.mtx.shape
-        if "central" in st.session_state:
-            central = st.session_state["central"]
-            print(central)
-        else:
-            central = f"({xx/2}, {yy/2}, 0)"
-            st.session_state["central"] = central
-
-        if "linear" in st.session_state:
-            linear = st.session_state["linear"]
-        else:
-            linear = f"({xx}, {yy/2}, 0)"
-            st.session_state["linear"] = linear
-
-        if "planar" in st.session_state:
-            planar = st.session_state["planar"]
-        else:
-            planar = f"({xx/2}, {yy}, 0)"
-            st.session_state["planar"] = planar
-
-        cols = st.columns(3)
-        with cols[0]:
-            interper = st.radio("Interpolator", ["Nearest", "Linear"], index=1)
-        with cols[1]:
-            width = st.slider(
-                "Width", 0, 2 * max(MY_MTX.mtx.shape), value=min(MY_MTX.mtx.shape)
+        with st.expander("**Settings**", expanded=True):
+            st.caption(
+                """To define a slice through an orthogonal grid,
+            we need to have 3 points to define a plane. These we will define as the points that are:
+            - central - linear  - planar
+            Additionally we need to know:
+            - width of the slice
+            - sample frequency
+            The width can be considered the zoom; the sample frequence, the resolution.
+            """
             )
-            samples = st.slider("Samples", 0, 50, value=10)
-        with cols[2]:
-            st.caption("Enter points in the format (0,1, 1.2, 3.4)")
-            params = {}
-            params.setdefault("label_visibility", "collapsed")
-            c1, c2 = st.columns([2, 5])
-            c1.markdown("central: :red[*]")
-            central = c2.text_input("", central, **params)
-            c1, c2 = st.columns([2, 5])
-            c1.markdown("linear: :red[*]")
-            linear = c2.text_input("", linear, **params)
-            c1, c2 = st.columns([2, 5])
-            c1.markdown("planar: :red[*]")
-            planar = c2.text_input("", planar, **params)
+            st.write(
+                f"The dimensions of the data are: xx, yy, zz = {MY_MTX.mtx.shape} (Note the width is dim-1)"
+            )
+            central = st.session_state["central"]
+            linear = st.session_state["linear"]
+            planar = st.session_state["planar"]
+            width = st.session_state["width"]
+            samples = st.session_state["samples"]
+
+            cols = st.columns([2, 2, 1, 3, 5])
+            with cols[0]:
+                interper = st.radio("Interpolator", ["Nearest", "Linear"], index=1)
+            with cols[1]:
+                extend = st.radio("Extending", ["None", "Periodic"], index=0).lower()
+            with cols[2]:
+                max_width = st.number_input(
+                    "max width", 2 * max(MY_MTX.mtx.shape), key="maxw"
+                )
+                max_samples = st.number_input("max samples", 50, key="maxs")
+            with cols[3]:
+                width = st.slider(
+                    "Width", 0, max_width, key="width_slider", value=width
+                )
+                samples = st.slider("Samples", 2, max_samples, value=samples)
+                st.session_state["width"] = width
+                st.session_state["samples"] = samples
+            with cols[4]:
+                st.caption("Enter points in the format (0,1, 1.2, 3.4)")
+                params = {}
+                params.setdefault("label_visibility", "collapsed")
+                c1, c2 = st.columns([2, 5])
+                c1.markdown("central: :red[*]")
+                central = c2.text_input(".", central, **params)
+                c1, c2 = st.columns([2, 5])
+                c1.markdown("linear: :red[*]")
+                linear = c2.text_input(".", linear, **params)
+                c1, c2 = st.columns([2, 5])
+                c1.markdown("planar: :red[*]")
+                planar = c2.text_input(".", planar, **params)
 
         # interpolator
         if interper == "Linear":
-            interp = mi.Linear(MY_MTX.mtx)
+            interp = mi.Linear(MY_MTX.mtx, wrap=extend)
         else:
-            interp = mi.Nearest(MY_MTX.mtx)
-
-        # unit grid
-        grid = gm.GridMaker()
-        slice_grid = grid.get_unit_grid(width, samples)
+            interp = mi.Nearest(MY_MTX.mtx, wrap=extend)
 
         # space transformer
         spc = sp.SpaceTransform(central, linear, planar)
-        xyz_coords = spc.convert_coords(slice_grid)
+        cols_plot = st.columns(2)
+        with cols_plot[0]:
+            # colsA = st.columns([1,2,1,2,1])
+            # with colsA[1]:
+            cols = st.columns([1, 1, 1, 1, 1])
+            with cols[1]:
+                st.write("Navigate")
+                if st.button(":arrow_left:", help="left"):
+                    grid_navigate("LE", spc)
 
-        # get all vals from interpolator
-        vals = interp.get_val_slice(xyz_coords)[:, :, 0]
-        xx, yy = vals.shape
+                if st.button(":arrows_counterclockwise:", help="anti-clockwise"):
+                    grid_navigate("AC", spc)
+            with cols[2]:
+                st.write("in")
+                if st.button(":arrow_up:", help="up"):
+                    grid_navigate("UP", spc)
+                if st.button(":arrow_down:", help="down"):
+                    grid_navigate("DN", spc)
 
-        x = list(range(0, xx))
-        y = list(range(0, yy))
+            with cols[3]:
+                st.write("plane")
+                if st.button(":arrow_right:", help="right"):
+                    grid_navigate("RI", spc)
+                if st.button(":arrows_clockwise:", help="clockwise"):
+                    grid_navigate("CL", spc)
 
-        if st.button("rotate"):
-            vcentral = spc.navigate(v3.VectorThree(abc=central), "CL", 0.01)
-            vlinear = spc.navigate(v3.VectorThree(abc=linear), "CL", 0.01)
-            vplanar = spc.navigate(v3.VectorThree(abc=planar), "CL", 0.01)
-            st.session_state["central"] = vcentral.to_coords_str()
-            st.session_state["linear"] = vlinear.to_coords_str()
-            st.session_state["planar"] = vplanar.to_coords_str()
+            # with colsA[3]:
+            with cols[1]:
+                st.write("Navigate")
+                if st.button(":arrow_heading_up:", help="tilt over"):
+                    grid_navigate("TO", spc)
+                if st.button(":leftwards_arrow_with_hook:", help="tilt left"):
+                    grid_navigate("TL", spc)
+            with cols[2]:
+                st.write("out of")
+                if st.button(":arrow_double_up:", help="forwards"):
+                    grid_navigate("FW", spc)
+                if st.button(":arrow_double_down:", help="backwards"):
+                    grid_navigate("BA", spc)
+            with cols[3]:
+                st.write("plane")
+                if st.button(":arrow_heading_down:", help="tilt under"):
+                    grid_navigate("TU", spc)
+                if st.button(":arrow_right_hook:", help="tilt right"):
+                    grid_navigate("TR", spc)
 
-        fig = go.Figure(
-            data=go.Heatmap(
+            # with colsA[2]:
+            with cols[2]:
+                st.write("Return to centre")
+                max_width = 2 * max(MY_MTX.mtx.shape)
+                width = min(MY_MTX.mtx.shape)
+                if st.button(":black_square_for_stop:", help="return to centre"):
+                    st.session_state["return_centre"] = True
+                    return_to_centre(MY_MTX)
+
+            "---"
+
+            # Get all the settings out of session state
+            central = st.session_state["central"]
+            linear = st.session_state["linear"]
+            planar = st.session_state["planar"]
+            width = st.session_state["width"]
+            samples = st.session_state["samples"]
+
+        with cols_plot[1]:
+            # unit grid
+            grid = gm.GridMaker()
+            slice_grid = grid.get_unit_grid(width, samples)
+            print("new slice grid", slice_grid.matrix)
+            # get all vals from interpolator
+            spc = sp.SpaceTransform(central, linear, planar)
+            xyz_coords = spc.convert_coords(slice_grid)
+            print("coord grid", str(xyz_coords))
+            vals = interp.get_val_slice(xyz_coords)[:, :, 0]
+            print("vals grid", str(vals))
+            xc = v3.VectorThree(abc=central).A
+            yc = v3.VectorThree(abc=central).B
+            zc = v3.VectorThree(abc=central).C
+            xs, ys = vals.shape
+
+            hover_data = []
+            vals_blank = []
+            for i in range(vals.shape[0]):
+                hover_data_row = []
+                blank_data_row = []
+                for j in range(vals.shape[1]):
+                    hvrV = xyz_coords.get(i, j)
+                    hover_data_row.append(hvrV.to_coords_str())
+                    blank_data_row.append(0)
+                hover_data.append(hover_data_row)
+                vals_blank.append(blank_data_row)
+
+            x = list(range(0, xs)) - xc
+            y = list(range(0, ys)) - yc
+
+            data_blanks = go.Heatmap(
+                z=vals_blank,
+                x=x,
+                y=y,
+                showscale=True,
+                colorscale=[
+                    (1.0, "rgba(100,0,0,0.5)"),
+                    (1.0, "rgba(100,0,0,0.5)"),
+                ],
+            )
+
+            data_vals = go.Heatmap(
                 z=vals,
                 x=x,
                 y=y,
+                text=hover_data,
                 colorscale=[
-                    (0, "aliceblue"),
-                    (0.2, "cornflowerblue"),
-                    (0.9, "crimson"),
-                    (1.0, "rgb(100,0,0)"),
+                    (0, "AliceBlue"),
+                    (0.2, "rgba(100,149,237,1)"),
+                    (0.9, "rgba(220,20,60,1)"),
+                    (1.0, "rgba(100,0,0,1)"),
                 ],
                 showscale=True,
+                hovertemplate="......%{z}<br>%{text}",
             )
-        )
+            fig = go.Figure(data_blanks)
+            fig = go.Figure(data_vals)
 
-        fig.update_xaxes(showticklabels=True, visible=False)  # hide all the xticks
-        fig.update_yaxes(showticklabels=True, visible=False)  # hide all the xticks
-        fig.update_yaxes(scaleanchor="x", scaleratio=1)
-        fig.update_xaxes(scaleanchor="y", scaleratio=1)
-        # Plot!
-        st.plotly_chart(fig, use_container_width=True)
+            # from PIL import Image
+            # img = Image.open("app/static/squice.png")
+            # lay_im = dict(source=img, xref="x", yref="y", x=0,y=0, xanchor="center", sizex=4, sizey=4, sizing="contain", opacity=0.35, layer="below")
+            # fig.add_layout_image(lay_im)
+
+            fig.update_xaxes(showticklabels=True, visible=False)  # hide all the xticks
+            fig.update_yaxes(showticklabels=True, visible=False)  # hide all the xticks
+            fig.update_yaxes(scaleanchor="x", scaleratio=1)
+            fig.update_xaxes(scaleanchor="y", scaleratio=1)
+            fig.update_layout(width=600, height=600, plot_bgcolor="rgba(0,0,0,0.1)")
+            fig.update_layout(xaxis=dict(showgrid=True), yaxis=dict(showgrid=True))
+            # Plot!
+            st.plotly_chart(fig, use_container_width=False)

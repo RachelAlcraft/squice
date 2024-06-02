@@ -26,17 +26,18 @@ class Matrix3d(object):
                 row.append(col)
             self.matrix.append(row)
 
+    def __str__(self) -> str:
+        mtxstr = ""
+        for i in range(self.width):
+            for j in range(self.length):
+                for k in range(self.depth):
+                    mtxstr += f"({i},{j},{k})={str(self.get(i,j,k))}"
+                mtxstr += "\t"
+            mtxstr += "\n"
+        return mtxstr
+
     def shape(self):
         return (self.width, self.length, self.depth)
-
-    def print(self):
-        for i in range(self.depth):
-            print("------")
-            for j in range(self.length):
-                row = []
-                for k in range(self.width):
-                    row.append(self.matrix[k][j][i])
-                print(row)
 
     def add(self, i, j, k=0, data=0):
         self.matrix[i][j][k] = data

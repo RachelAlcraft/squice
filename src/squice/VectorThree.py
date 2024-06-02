@@ -34,6 +34,9 @@ class VectorThree(object):
                 self.B = self.npy[1]
                 self.C = self.npy[2]
 
+    def __str__(self) -> str:
+        return self.to_coords_str()
+
     def from_coords_str(self, coords):
         coords = coords.strip()
         if coords[0] == "(":

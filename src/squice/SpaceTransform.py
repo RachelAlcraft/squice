@@ -163,10 +163,10 @@ class SpaceTransform(object):
 
     def convert_coords(self, unit_coords):
         # 2d or 3d?
-        if type(unit_coords) is d3.Matrix3d:
+        a, b, c = unit_coords.shape()
+        if c > 1:
             return self.convert_coords3d(unit_coords)
         else:
-            a, b = unit_coords.shape()
             mat2 = d3.Matrix3d(a, b)
             for i in range(a):
                 for j in range(b):
@@ -174,7 +174,7 @@ class SpaceTransform(object):
                         unit_coords.get(i, j)[0], unit_coords.get(i, j)[1], 0
                     )
                     vec_t = self.apply_transformation(vec)
-                    mat2.add(i, j, vec_t)
+                    mat2.add(i, j, data=vec_t)
             return mat2
 
     def convert_coords3d(self, unit_coords):

@@ -25,10 +25,19 @@ class MtxInterpolator(ABC):
         self.mtx = mtx
         self.wrap = wrap
 
+    # I need to work out these formula!!!! when negative what should the periodic be.
+
     def get_value(self, x, y, z):
         # 1. first validate inputs
         xx, yy, zz = self.mtx.shape
+        xx, yy, zz = xx - 1, yy - 1, zz - 1
         if self.wrap == "periodic":
+            while x < 0:
+                x += xx
+            while y < 0:
+                y += yy
+            while z < 0:
+                z += zz
             x = (math.floor(x) // xx) + (x - math.floor(x))
             y = (math.floor(y) // yy) + (y - math.floor(y))
             z = (math.floor(z) // zz) + (z - math.floor(z))
@@ -47,13 +56,17 @@ class MtxInterpolator(ABC):
             z = max(z, 0)
         else:
             x, y, z = round(x, 4), round(y, 4), round(z, 4)
-            if x > xx - 1 or y > yy - 1 or z > zz - 1:
+            if x > xx or y > yy or z > zz:
                 return None
             if x < 0 or y < 0 or z < 0:
                 return None
 
         # 2. get the value from the interpolator
-        return self._get_value(x, y, z)
+        try:
+            val = self._get_value(x, y, z)
+            return self._get_value(x, y, z)
+        except Exception as e:
+            print(e)
 
     @abstractmethod
     def _get_value(self, x, y, z):
