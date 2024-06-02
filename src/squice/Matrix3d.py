@@ -7,7 +7,7 @@ class Matrix3d(object):
         An arbitrary typed 3d object
 
         Paramaters
-        -----------
+
         width : int
         length : int
         depth : int = 1
