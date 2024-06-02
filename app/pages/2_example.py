@@ -9,6 +9,7 @@ import io
 import numpy as np
 import os
 import uuid
+import pandas as pd
 
 st.set_page_config(
     page_title="squice",
@@ -19,10 +20,12 @@ st.set_page_config(
 st.title("SQUICE: Example")
 
 
-def grid_navigate(cmd, spc):
-    vcentral = spc.navigate(v3.VectorThree(abc=central), cmd, 0.1)
-    vlinear = spc.navigate(v3.VectorThree(abc=linear), cmd, 0.1)
-    vplanar = spc.navigate(v3.VectorThree(abc=planar), cmd, 0.1)
+def grid_navigate(cmd, spc, angle, distance):
+    vcentral = spc.navigate(
+        v3.VectorThree(abc=central), cmd, distance, angle_delta=angle
+    )
+    vlinear = spc.navigate(v3.VectorThree(abc=linear), cmd, distance, angle_delta=angle)
+    vplanar = spc.navigate(v3.VectorThree(abc=planar), cmd, distance, angle_delta=angle)
     st.session_state["central"] = vcentral.to_coords_str()
     st.session_state["linear"] = vlinear.to_coords_str()
     st.session_state["planar"] = vplanar.to_coords_str()
@@ -40,12 +43,10 @@ def return_to_centre(matrix):
     xx, yy, zz = matrix.mtx.shape
     # if we haven't initted values then they need defaults
     if "return_centre" not in st.session_state:
-        print("Init values")
         st.session_state["return_centre"] = False
         set_c_l_p(xx, yy, zz)
     # if we have a return to centre then we re-init certain values
     if st.session_state["return_centre"]:
-        print("Return to centre")
         set_c_l_p(xx, yy, zz)
         st.session_state["return_centre"] = False
 
@@ -128,46 +129,51 @@ if MY_MTX is not None:
     with tabAll:
         st.write("### Raw matrix data")
 
-        xs = []
-        ys = []
-        zs = []
-        values = []
-        minv = None
-        maxv = None
+        cols = st.columns(2)
+        with cols[0]:
+            chart_style = st.radio("Plot type", ["isosurface", "3dscatter"])
 
-        a, b, c = MY_MTX.mtx.shape
-        for i in range(a):
-            for j in range(b):
-                for k in range(a):
-                    val = 0
-                    if k < c:
-                        val = MY_MTX.mtx[i][j][k]
-                        if minv is None:
-                            minv = val
-                            maxv = val
-                        else:
-                            minv = min(minv, val)
-                            maxv = max(maxv, val)
-                    xs.append(i)
-                    ys.append(j)
-                    zs.append(k)
-                    values.append(val)
+        with cols[1]:
 
-        c0 = "rgba(119,136,153,1)"
-        c1 = "rgba(240,248,255,0)"
-        c2 = "rgba(100,149,237,0.5)"
-        c3 = "rgba(220,20,60,0.9)"
-        c4 = "rgba(100,0,0,1)"
+            xs = []
+            ys = []
+            zs = []
+            values = []
+            minv = None
+            maxv = None
 
-        zero = 1 - (maxv / abs(maxv - minv))
-        zer0 = max(0.01, zero)
-        zer1 = max(zer0 * 1.5, 0.5)
-        zer2 = max(zer0 * 1.9, 0.8)
+            a, b, c = MY_MTX.mtx.shape
+            for i in range(a):
+                for j in range(b):
+                    for k in range(a):
+                        val = 0
+                        if k < c:
+                            val = MY_MTX.mtx[i][j][k]
+                            if minv is None:
+                                minv = val
+                                maxv = val
+                            else:
+                                minv = min(minv, val)
+                                maxv = max(maxv, val)
+                        xs.append(i)
+                        ys.append(j)
+                        zs.append(k)
+                        values.append(val)
 
-        colorscale = [(0, c0), (zer0, c1), (zer1, c2), (zer2, c3), (1, c4)]
+            c0 = "rgba(119,136,153,0.6)"
+            c1 = "rgba(240,248,255,0)"
+            c2 = "rgba(100,149,237,0.5)"
+            c3 = "rgba(220,20,60,0.9)"
+            c4 = "rgba(100,0,0,1)"
 
-        fig = go.Figure(
-            data=go.Isosurface(
+            zero = 1 - (maxv / abs(maxv - minv))
+            zer0 = max(0, zero)
+            zer1 = max(zer0 * 1.5, 0.1)
+            zer2 = max(zer0 * 1.9, 0.8)
+
+            colorscale = [(0, c0), (zer0, c1), (zer1, c2), (zer2, c3), (1, c4)]
+
+            data_iso = go.Isosurface(
                 x=xs,
                 y=ys,
                 z=zs,
@@ -181,14 +187,72 @@ if MY_MTX is not None:
                 isomin=minv,
                 isomax=maxv,
             )
-        )
 
-        fig.update_xaxes(showticklabels=False, visible=False)  # hide all the xticks
-        fig.update_yaxes(showticklabels=False, visible=False)  # hide all the xticks
-        fig.update_yaxes(scaleanchor="x", scaleratio=1)
-        fig.update_xaxes(scaleanchor="y", scaleratio=1)
-        # Plot!
-        st.plotly_chart(fig, use_container_width=True)
+            dicdf = {}
+            dicdf["x"] = []
+            dicdf["y"] = []
+            dicdf["z"] = []
+            dicdf["v"] = []
+            xx, yy, zz = MY_MTX.mtx.shape
+            for i in range(xx):
+                for j in range(yy):
+                    for k in range(zz):
+                        dicdf["x"].append(i)
+                        dicdf["y"].append(j)
+                        dicdf["z"].append(k)
+                        v = MY_MTX.mtx[i][j][k]
+                        dicdf["v"].append(v)
+            df = pd.DataFrame.from_dict(dicdf)
+            data_scatter = go.Scatter3d(
+                x=df["x"],
+                y=df["y"],
+                z=df["z"],
+                mode="markers",
+                marker=dict(
+                    color=df["v"], colorscale=colorscale, showscale=True, size=12
+                ),
+            )
+
+            if chart_style == "isosurface":
+                fig = go.Figure(data_iso)
+            else:
+                fig = go.Figure(data_scatter)
+
+            # fig.update_xaxes(showticklabels=False, visible=False,scaleanchor="y", scaleratio=1)
+            # fig.update_yaxes(showticklabels=False, visible=False,scaleanchor="x", scaleratio=1)
+            fig.update_xaxes(
+                showticklabels=False,
+                visible=True,
+                showline=False,
+                linewidth=2,
+                linecolor="black",
+                mirror=True,
+                scaleanchor="y",
+                scaleratio=1,
+                gridwidth=1,
+                gridcolor="black",
+            )
+            fig.update_yaxes(
+                showticklabels=False,
+                visible=True,
+                showline=False,
+                linewidth=2,
+                linecolor="black",
+                mirror=True,
+                scaleanchor="x",
+                scaleratio=1,
+                gridwidth=1,
+                gridcolor="black",
+            )
+            fig.update_layout(
+                width=600,
+                height=600,
+                plot_bgcolor="rgba(0,0,0,1.0)",
+                xaxis=dict(showgrid=False),
+                yaxis=dict(showgrid=False),
+            )
+            # Plot!
+            st.plotly_chart(fig, use_container_width=False)
 
     with tabSlice:
         return_to_centre(MY_MTX)
@@ -257,57 +321,58 @@ if MY_MTX is not None:
             # colsA = st.columns([1,2,1,2,1])
             # with colsA[1]:
             cols = st.columns([1, 1, 1, 1, 1])
+            with cols[0]:
+                angle = st.number_input("angle", 1)
+                distance = st.number_input("distance", 0.1)
             with cols[1]:
                 st.write("Navigate")
                 if st.button(":arrow_left:", help="left"):
-                    grid_navigate("LE", spc)
+                    grid_navigate("LE", spc, angle, distance)
 
                 if st.button(":arrows_counterclockwise:", help="anti-clockwise"):
-                    grid_navigate("AC", spc)
+                    grid_navigate("AC", spc, angle, distance)
             with cols[2]:
                 st.write("in")
                 if st.button(":arrow_up:", help="up"):
-                    grid_navigate("UP", spc)
+                    grid_navigate("UP", spc, angle, distance)
                 if st.button(":arrow_down:", help="down"):
-                    grid_navigate("DN", spc)
+                    grid_navigate("DN", spc, angle, distance)
 
             with cols[3]:
                 st.write("plane")
                 if st.button(":arrow_right:", help="right"):
-                    grid_navigate("RI", spc)
+                    grid_navigate("RI", spc, angle, distance)
                 if st.button(":arrows_clockwise:", help="clockwise"):
-                    grid_navigate("CL", spc)
+                    grid_navigate("CL", spc, angle, distance)
 
             # with colsA[3]:
             with cols[1]:
                 st.write("Navigate")
                 if st.button(":arrow_heading_up:", help="tilt over"):
-                    grid_navigate("TO", spc)
-                if st.button(":leftwards_arrow_with_hook:", help="tilt left"):
-                    grid_navigate("TL", spc)
+                    grid_navigate("TO", spc, angle, distance)
+                if st.button(":arrow_heading_down:", help="tilt under"):
+                    grid_navigate("TU", spc, angle, distance)
             with cols[2]:
                 st.write("out of")
                 if st.button(":arrow_double_up:", help="forwards"):
-                    grid_navigate("FW", spc)
+                    grid_navigate("FW", spc, angle, distance)
                 if st.button(":arrow_double_down:", help="backwards"):
-                    grid_navigate("BA", spc)
+                    grid_navigate("BA", spc, angle, distance)
             with cols[3]:
                 st.write("plane")
-                if st.button(":arrow_heading_down:", help="tilt under"):
-                    grid_navigate("TU", spc)
+                if st.button(":leftwards_arrow_with_hook:", help="tilt left"):
+                    grid_navigate("TL", spc, angle, distance)
                 if st.button(":arrow_right_hook:", help="tilt right"):
-                    grid_navigate("TR", spc)
+                    grid_navigate("TR", spc, angle, distance)
 
             # with colsA[2]:
             with cols[2]:
                 st.write("Return to centre")
                 max_width = 2 * max(MY_MTX.mtx.shape)
-                width = min(MY_MTX.mtx.shape)
+                width = max(MY_MTX.mtx.shape)
                 if st.button(":black_square_for_stop:", help="return to centre"):
                     st.session_state["return_centre"] = True
                     return_to_centre(MY_MTX)
-
-            "---"
 
             # Get all the settings out of session state
             central = st.session_state["central"]
@@ -320,71 +385,76 @@ if MY_MTX is not None:
             # unit grid
             grid = gm.GridMaker()
             slice_grid = grid.get_unit_grid(width, samples)
-            print("new slice grid", slice_grid.matrix)
             # get all vals from interpolator
             spc = sp.SpaceTransform(central, linear, planar)
             xyz_coords = spc.convert_coords(slice_grid)
-            print("coord grid", str(xyz_coords))
+            # print(xyz_coords)
             vals = interp.get_val_slice(xyz_coords)[:, :, 0]
-            print("vals grid", str(vals))
+            # print(vals)
             xc = v3.VectorThree(abc=central).A
             yc = v3.VectorThree(abc=central).B
             zc = v3.VectorThree(abc=central).C
             xs, ys = vals.shape
 
             hover_data = []
-            vals_blank = []
             for i in range(vals.shape[0]):
                 hover_data_row = []
-                blank_data_row = []
                 for j in range(vals.shape[1]):
                     hvrV = xyz_coords.get(i, j)
                     hover_data_row.append(hvrV.to_coords_str())
-                    blank_data_row.append(0)
                 hover_data.append(hover_data_row)
-                vals_blank.append(blank_data_row)
 
             x = list(range(0, xs)) - xc
             y = list(range(0, ys)) - yc
 
-            data_blanks = go.Heatmap(
-                z=vals_blank,
-                x=x,
-                y=y,
-                showscale=True,
-                colorscale=[
-                    (1.0, "rgba(100,0,0,0.5)"),
-                    (1.0, "rgba(100,0,0,0.5)"),
-                ],
-            )
+            cs = [
+                (0, "AliceBlue"),
+                (0.2, "rgba(100,149,237,1)"),
+                (0.9, "rgba(220,20,60,1)"),
+                (1.0, "rgba(100,0,0,1)"),
+            ]
 
             data_vals = go.Heatmap(
                 z=vals,
                 x=x,
                 y=y,
                 text=hover_data,
-                colorscale=[
-                    (0, "AliceBlue"),
-                    (0.2, "rgba(100,149,237,1)"),
-                    (0.9, "rgba(220,20,60,1)"),
-                    (1.0, "rgba(100,0,0,1)"),
-                ],
+                colorscale=cs,
                 showscale=True,
                 hovertemplate="......%{z}<br>%{text}",
             )
-            fig = go.Figure(data_blanks)
+
             fig = go.Figure(data_vals)
-
-            # from PIL import Image
-            # img = Image.open("app/static/squice.png")
-            # lay_im = dict(source=img, xref="x", yref="y", x=0,y=0, xanchor="center", sizex=4, sizey=4, sizing="contain", opacity=0.35, layer="below")
-            # fig.add_layout_image(lay_im)
-
-            fig.update_xaxes(showticklabels=True, visible=False)  # hide all the xticks
-            fig.update_yaxes(showticklabels=True, visible=False)  # hide all the xticks
-            fig.update_yaxes(scaleanchor="x", scaleratio=1)
-            fig.update_xaxes(scaleanchor="y", scaleratio=1)
-            fig.update_layout(width=600, height=600, plot_bgcolor="rgba(0,0,0,0.1)")
-            fig.update_layout(xaxis=dict(showgrid=True), yaxis=dict(showgrid=True))
+            fig.update_xaxes(
+                showticklabels=False,
+                visible=True,
+                showline=False,
+                linewidth=2,
+                linecolor="black",
+                mirror=True,
+                scaleanchor="y",
+                scaleratio=1,
+                gridwidth=1,
+                gridcolor="black",
+            )
+            fig.update_yaxes(
+                showticklabels=False,
+                visible=True,
+                showline=False,
+                linewidth=2,
+                linecolor="black",
+                mirror=True,
+                scaleanchor="x",
+                scaleratio=1,
+                gridwidth=1,
+                gridcolor="black",
+            )
+            fig.update_layout(
+                width=600,
+                height=600,
+                plot_bgcolor="rgba(0,0,0,1.0)",
+                xaxis=dict(showgrid=True),
+                yaxis=dict(showgrid=True),
+            )
             # Plot!
             st.plotly_chart(fig, use_container_width=False)

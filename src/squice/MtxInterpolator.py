@@ -22,48 +22,49 @@ class MtxInterpolator(ABC):
     """
 
     def __init__(self, mtx, wrap="none"):
+        """
+        - mtx=numpy matrix
+        - wrap=["none","periodic"]
+        """
         self.mtx = mtx
         self.wrap = wrap
 
     # I need to work out these formula!!!! when negative what should the periodic be.
 
-    def get_value(self, x, y, z):
-        # 1. first validate inputs
+    def convert_coord(self, x, y, z):
+        valid = True
         xx, yy, zz = self.mtx.shape
-        xx, yy, zz = xx - 1, yy - 1, zz - 1
+
         if self.wrap == "periodic":
             while x < 0:
-                x += xx
+                x += xx - 1
             while y < 0:
-                y += yy
+                y += yy - 1
             while z < 0:
-                z += zz
-            x = (math.floor(x) // xx) + (x - math.floor(x))
-            y = (math.floor(y) // yy) + (y - math.floor(y))
-            z = (math.floor(z) // zz) + (z - math.floor(z))
-        elif self.wrap == "mirror":
-            if x - xx - 1 > 0:
-                x = xx - (x - xx)
-            x = (math.floor(x) // xx) + (x - math.floor(x))
-            y = (math.floor(y) // yy) + (y - math.floor(y))
-            z = (math.floor(z) // zz) + (z - math.floor(z))
-        elif self.wrap == "cap":
-            x = min(x, xx - 1)
-            y = min(y, yy - 1)
-            z = min(z, zz - 1)
-            x = max(x, 0)
-            y = max(y, 0)
-            z = max(z, 0)
-        else:
-            x, y, z = round(x, 4), round(y, 4), round(z, 4)
-            if x > xx or y > yy or z > zz:
-                return None
-            if x < 0 or y < 0 or z < 0:
-                return None
+                z += zz - 1
+            while x > xx - 1:
+                x -= xx - 1
+            while y > yy - 1:
+                y -= yy - 1
+            while z > zz - 1:
+                z -= zz - 1
 
+        x, y, z = round(x, 4), round(y, 4), round(z, 4)
+        if x > xx - 1 or y > yy - 1 or z > zz - 1:
+            valid = False
+        if x < 0 or y < 0 or z < 0:
+            valid = False
+
+        return x, y, z, valid
+
+    def get_value(self, xi, yi, zi):
+        # 1. first validate inputs
+        x, y, z, valid = self.convert_coord(xi, yi, zi)
+        x, y, z = round(x, 4), round(y, 4), round(z, 4)
+        if not valid:
+            return None
         # 2. get the value from the interpolator
         try:
-            val = self._get_value(x, y, z)
             return self._get_value(x, y, z)
         except Exception as e:
             print(e)

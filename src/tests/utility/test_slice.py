@@ -26,24 +26,60 @@ def test_slice_screen():
         """
     MY_MTX = dl.NumpyNow(mtx_txt)
     MY_MTX.load()
-    interp = mi.Nearest(MY_MTX.mtx)
 
-    spc = sp.SpaceTransform("(1.0, 1.0, 1.0)", "(2.0, 1.0, 1.0)", "(1.0, 2.0, 1.0)")
-    grid = gm.GridMaker()
-    slice_grid = grid.get_unit_grid(2, 3)
-    xyz_coords = spc.convert_coords(slice_grid)
-    vals = interp.get_val_slice(xyz_coords)[:, :, 0]
+    interp_methods = []
+    interp_methods.append("nearest")
+    # interp_methods.append("linear")
 
-    print(f"The unit slice is\n{slice_grid}")
-    print(f"Which converts to \n{xyz_coords}")
-    print(f"With vals\n{vals}")
+    clp = []
+    clp.append(("(1.0, 1.0, 1.0)", "(2.0, 1.0, 1.0)", "(1.0, 2.0, 1.0)"))
+    # clp.append(("(1.0, 1.0, 1.0)", "(1.8091,0.4122,1.0)", "(1.5878,1.8091,1.0)"))
+    width_samples = []
+    width_samples.append((2, 3))
+    # width_samples.append((5,4))
 
-    # test vals
-    _000 = xyz_coords.matrix[2][2][0]
-    print(_000)
-    x, y, z = _000.A, _000.B, _000.C
-    v = interp.get_value(x, y, z)
-    print(x, y, z, v)
+    for interp_method in interp_methods:
+        if interp_method == "linear":
+            interp_none = mi.Linear(MY_MTX.mtx, wrap="none")
+            interp_periodic = mi.Linear(MY_MTX.mtx, wrap="periodic")
+        else:
+            interp_none = mi.Nearest(MY_MTX.mtx, wrap="none")
+            interp_periodic = mi.Nearest(MY_MTX.mtx, wrap="periodic")
+        for central, linear, planar in clp:
+            for width, samples in width_samples:
+                spc = sp.SpaceTransform(central, linear, planar)
+                grid = gm.GridMaker()
+                print("The unit slice is")
+                slice_grid = grid.get_unit_grid(width, samples)
+                print(f"{slice_grid}")
+
+                print("Which converts to")
+                xyz_coords = spc.convert_coords(slice_grid)
+                print(f"{xyz_coords}")
+
+                print("With vals")
+                vals = interp_none.get_val_slice(xyz_coords)[:, :, 0]
+                print(f"{vals}")
+
+                print("With vals periodic")
+                vals_p = interp_periodic.get_val_slice(xyz_coords)[:, :, 0]
+                print(f"{vals_p}")
+
+                # test vals
+                _000 = xyz_coords.matrix[2][2][0]
+                print(_000)
+                x, y, z = _000.A, _000.B, _000.C
+                v = interp_none.get_value(x, y, z)
+                print(x, y, z, v)
+
+                # test vals
+                _000 = xyz_coords.matrix[2][2][0]
+                print(_000)
+                x, y, z = _000.A, _000.B, _000.C
+                vp = interp_periodic.get_value(x, y, z)
+                print(x, y, z, vp)
+
+                # assert v == vp, "Vals and periodic vals should be the same"
 
 
 def test_slice():

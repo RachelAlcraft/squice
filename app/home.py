@@ -15,6 +15,12 @@ st.write(
 numerical matrices. These matrices can be any kind of numerical data, including data or
 some kind of data in space.
 
+The documentation for the library classes and functions can be found at [pydoctor squice library doc](https://rachelalcraft.github.io/squice/)
+
+Issues can be raised here [squice github issues](https://github.com/RachelAlcraft/squice/issues)
+
+The library is on pypi: [squice on pypi](https://pypi.org/project/squice/)
+
 In addition to the ability to load or define 3d numpy matrices for the library, there
 is provided a simple means to convert electron density/microscopy and protein
 data into 3d matrices for visualisation as this was the motivating factor behind the

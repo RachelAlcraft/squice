@@ -272,8 +272,8 @@ class SpaceTransform(object):
         else:
             return v3.VectorThree(x, y, 0)
 
-    def navigate(self, point, nav, nav_distance):
-        angle = 2 * self.M_PI / 90
+    def navigate(self, point, nav, nav_distance, angle_delta=1):
+        angle = angle_delta * 2 * self.M_PI / 90
         point = self.reverse_transformation(point)
         if nav == "DN":  #'DN'down
             point.A += nav_distance
