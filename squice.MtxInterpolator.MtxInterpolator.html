@@ -104,7 +104,37 @@
         
 
         
+            <div class="itemName"><code><a href="#convert_coord" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.convert_coord">convert<wbr></wbr>_coord</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_val_slice" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.get_val_slice">get<wbr></wbr>_val<wbr></wbr>_slice</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#get_value" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.get_value">get<wbr></wbr>_value</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_get_value" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator._get_value">_get<wbr></wbr>_value</a></code>
             </div>
         
 
@@ -124,6 +154,16 @@
 
         
             <div class="itemName"><code><a href="#mtx" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.mtx">mtx</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#wrap" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.wrap">wrap</a></code>
             </div>
         
 
@@ -150,7 +190,17 @@
         <div class="childrenKindTitle">Classes</div>
         <ul>
     
-    <li class=" thisobject">
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="squice.MtxInterpolator.Linear.html" class="internal-link" title="squice.MtxInterpolator.Linear"><wbr></wbr>Linear</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
         
         
         
@@ -280,23 +330,33 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">MtxInterpolator</span>(ABC):</code></p><p>Known subclasses: <code><a href="squice.MtxInterpolator.Nearest.html" class="internal-link">squice.MtxInterpolator.Nearest</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.__init__">MtxInterpolator(mtx)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">MtxInterpolator</span>(ABC):</code></p><p>Known subclasses: <code><a href="squice.MtxInterpolator.Linear.html" class="internal-link">squice.MtxInterpolator.Linear</a></code>, <code><a href="squice.MtxInterpolator.Nearest.html" class="internal-link">squice.MtxInterpolator.Nearest</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.__init__">MtxInterpolator(mtx, wrap)</a></code></p>
           <p><a href="classIndex.html#squice.MtxInterpolator.MtxInterpolator">View In Hierarchy</a></p>
         </div>
 
         <div class="moduleDocstring">
-          <div><p>Abstract class to define the methods for interpolation of a 3d numpy matrix</p></div>
+          <div><p>Abstract class to define the methods for interpolation of a 3d numpy matrix. There are 3 methods of wrapping the data if it is out of bounds: cap : it is simply fixed at the bounds if it goes beyond periodic: it loops to make it a periodic shape eg 3.1 becomes 0.1 if the max is 3 mirror: the edges reflect back, best only with small bleeds in the edge</p></div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id13">
+          <table class="children sortable" id="id21">
   
   
   <tr class="method">
     
     <td>Method</td>
     <td><code><a href="#__init__" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.__init__">__init__</a></code></td>
+    <td>mtx=numpy matrix</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#convert_coord" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.convert_coord">convert<wbr></wbr>_coord</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_val_slice" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.get_val_slice">get<wbr></wbr>_val<wbr></wbr>_slice</a></code></td>
+    <td>A matrix of coordinates for creating values. The matrix is a custom 3d format called Matrix3d.</td>
   </tr><tr class="method">
     
     <td>Method</td>
@@ -306,6 +366,16 @@
     
     <td>Instance Variable</td>
     <td><code><a href="#mtx" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.mtx">mtx</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#wrap" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator.wrap">wrap</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method private">
+    
+    <td>Method</td>
+    <td><code><a href="#_get_value" class="internal-link" title="squice.MtxInterpolator.MtxInterpolator._get_value">_get<wbr></wbr>_value</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -327,9 +397,37 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, mtx)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, mtx, wrap=<span class="rst-variable-quote">'</span><span class="rst-variable-string">none</span><span class="rst-variable-quote">'</span>)</span>:
     
     <a class="headerLink" href="#__init__" title="squice.MtxInterpolator.MtxInterpolator.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p><ul class="rst-simple">
+<li>mtx=numpy matrix</li>
+<li>wrap=["none","periodic"]</li>
+</ul>
+</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="squice.MtxInterpolator.MtxInterpolator.convert_coord">
+    
+  </a>
+  <a name="convert_coord">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">convert_coord</span><span class="function-signature">(self, x, y, z)</span>:
+    
+    <a class="headerLink" href="#convert_coord" title="squice.MtxInterpolator.MtxInterpolator.convert_coord">
       
       
       ¶
@@ -342,6 +440,30 @@
 </div><div class="basemethod">
   
   
+  <a name="squice.MtxInterpolator.MtxInterpolator.get_val_slice">
+    
+  </a>
+  <a name="get_val_slice">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_val_slice</span><span class="function-signature">(self, coords_mtx)</span>:
+    
+    <a class="headerLink" href="#get_val_slice" title="squice.MtxInterpolator.MtxInterpolator.get_val_slice">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>A matrix of coordinates for creating values. The matrix is a custom 3d format called Matrix3d.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
   <a name="squice.MtxInterpolator.MtxInterpolator.get_value">
     
   </a>
@@ -350,8 +472,8 @@
   </a>
   <div class="functionHeader">
     
-    @abstractmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">get_value</span><span class="function-signature">(self, x, y, z)</span>:
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_value</span><span class="function-signature">(self, xi, yi, zi)</span>:
     
     <a class="headerLink" href="#get_value" title="squice.MtxInterpolator.MtxInterpolator.get_value">
       
@@ -360,7 +482,7 @@
     </a>
   </div>
   <div class="docstring functionBody">
-    <div class="interfaceinfo">overridden in <code><a href="squice.MtxInterpolator.Nearest.html" class="internal-link">squice.MtxInterpolator.Nearest</a></code></div>
+    
     <div><p class="undocumented">Undocumented</p></div>
   </div>
 </div><div class="baseinstancevariable">
@@ -387,6 +509,54 @@
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="squice.MtxInterpolator.MtxInterpolator.wrap">
+    
+  </a>
+  <a name="wrap">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">wrap</span> =
+    
+    <a class="headerLink" href="#wrap" title="squice.MtxInterpolator.MtxInterpolator.wrap">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="squice.MtxInterpolator.MtxInterpolator._get_value">
+    
+  </a>
+  <a name="_get_value">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @abstractmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_get_value</span><span class="function-signature">(self, x, y, z)</span>:
+    
+    <a class="headerLink" href="#_get_value" title="squice.MtxInterpolator.MtxInterpolator._get_value">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    <div class="interfaceinfo">overridden in <code><a href="squice.MtxInterpolator.Linear.html" class="internal-link">squice.MtxInterpolator.Linear</a></code>, <code><a href="squice.MtxInterpolator.Nearest.html" class="internal-link">squice.MtxInterpolator.Nearest</a></code></div>
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
 </div>
         </div>
       
@@ -400,7 +570,7 @@
     <div class="container">
       <a href="index.html">API Documentation</a> for squice,
     generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-      24.3.3 at 2024-05-26 11:20:31.
+      24.3.3 at 2024-06-02 15:57:12.
     </div>
     
     <script src="ajax.js" type="text/javascript"></script>

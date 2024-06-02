@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>squice.DataLoaders</title>
+    <title>squice.BinaryFile</title>
     <meta name="generator" content="pydoctor 24.3.3"> 
         
     </meta>
@@ -73,7 +73,7 @@
 
       <div class="thingTitle">
         <span>Module</span>
-        <code class="thisobject"><a href="squice.DataLoaders.html" class="internal-link" title="This module"><wbr></wbr>Data<wbr></wbr>Loaders</a></code> 
+        <code class="thisobject"><a href="squice.BinaryFile.html" class="internal-link" title="This module"><wbr></wbr>Binary<wbr></wbr>File</a></code> 
       </div>
       
       <div>
@@ -91,7 +91,7 @@
         
 
         
-            <div class="itemName"><code><a href="squice.DataLoaders.DataLoader.html" class="internal-link" title="squice.DataLoaders.DataLoader"><wbr></wbr>Data<wbr></wbr>Loader</a></code>
+            <div class="itemName"><code><a href="squice.BinaryFile.BinaryFile.html" class="internal-link" title="squice.BinaryFile.BinaryFile"><wbr></wbr>Binary<wbr></wbr>File</a></code>
             </div>
         
 
@@ -101,27 +101,7 @@
         
 
         
-            <div class="itemName"><code><a href="squice.DataLoaders.ElectronDensityCcp4.html" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4"><wbr></wbr>Electron<wbr></wbr>Density<wbr></wbr>Ccp4</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="squice.DataLoaders.NumpyFile.html" class="internal-link" title="squice.DataLoaders.NumpyFile"><wbr></wbr>Numpy<wbr></wbr>File</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="squice.DataLoaders.NumpyNow.html" class="internal-link" title="squice.DataLoaders.NumpyNow"><wbr></wbr>Numpy<wbr></wbr>Now</a></code>
+            <div class="itemName"><code><a href="squice.BinaryFile.NumpyBinary.html" class="internal-link" title="squice.BinaryFile.NumpyBinary"><wbr></wbr>Numpy<wbr></wbr>Binary</a></code>
             </div>
         
 
@@ -154,7 +134,7 @@
         <div class="childrenKindTitle">Modules</div>
         <ul>
     
-    <li class="">
+    <li class=" thisobject">
         
         
         
@@ -164,7 +144,7 @@
             </div>
         
 
-    </li><li class=" thisobject">
+    </li><li class="">
         
         
         
@@ -346,7 +326,7 @@
         </div>
 
         <div class="page-header">
-          <h1 class="module"><code><code><a href="index.html" class="internal-link">squice</a></code><wbr></wbr>.<code><a href="squice.DataLoaders.html" class="internal-link" title="squice.DataLoaders">DataLoaders</a></code></code></h1>
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">squice</a></code><wbr></wbr>.<code><a href="squice.BinaryFile.html" class="internal-link" title="squice.BinaryFile">BinaryFile</a></code></code></h1>
           <div id="showPrivate">
             <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
           </div>
@@ -362,33 +342,23 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p>Module to load different data fromats from file and convert into a numpy matrix</p></div>
+          <div><p>Class to load and handle binary data. This could be electron density data or numpy data. They feature header info followed by the boinary data.</p></div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id6">
+          <table class="children sortable" id="id2">
   
   
   <tr class="class">
     
     <td>Class</td>
-    <td><code><a href="squice.DataLoaders.DataLoader.html" class="internal-link" title="squice.DataLoaders.DataLoader"><wbr></wbr>Data<wbr></wbr>Loader</a></code></td>
-    <td>Abstract class to load data from file and convert to a numpy matrix</td>
+    <td><code><a href="squice.BinaryFile.BinaryFile.html" class="internal-link" title="squice.BinaryFile.BinaryFile"><wbr></wbr>Binary<wbr></wbr>File</a></code></td>
+    <td>Abstract class to various formats of binary data</td>
   </tr><tr class="class">
     
     <td>Class</td>
-    <td><code><a href="squice.DataLoaders.ElectronDensityCcp4.html" class="internal-link" title="squice.DataLoaders.ElectronDensityCcp4"><wbr></wbr>Electron<wbr></wbr>Density<wbr></wbr>Ccp4</a></code></td>
-    <td>Class to load electron density in the ccp4 format</td>
-  </tr><tr class="class">
-    
-    <td>Class</td>
-    <td><code><a href="squice.DataLoaders.NumpyFile.html" class="internal-link" title="squice.DataLoaders.NumpyFile"><wbr></wbr>Numpy<wbr></wbr>File</a></code></td>
-    <td>Class to load a file of numerical data from numpy serislisation format</td>
-  </tr><tr class="class">
-    
-    <td>Class</td>
-    <td><code><a href="squice.DataLoaders.NumpyNow.html" class="internal-link" title="squice.DataLoaders.NumpyNow"><wbr></wbr>Numpy<wbr></wbr>Now</a></code></td>
-    <td>Class to create a numpy matrix inline. The format of the uploaded data is (note the commas are the delim,sapce is for visuals) [[[1,2,3], [4, 5, 6]],</td>
+    <td><code><a href="squice.BinaryFile.NumpyBinary.html" class="internal-link" title="squice.BinaryFile.NumpyBinary"><wbr></wbr>Numpy<wbr></wbr>Binary</a></code></td>
+    <td>Features binray data in the format: https://numpy.org/doc/1.13/neps/npy-format.html</td>
   </tr>
 </table>
           
