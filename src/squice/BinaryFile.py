@@ -24,11 +24,6 @@ class BinaryFile(ABC):
 class NumpyBinary(BinaryFile):
     """
     Features binray data in the format:
-    b"\x93NUMPY\x01\x00v\x00{
-        'descr': '<f8',
-        'fortran_order': False,
-        'shape': (3, 3, 3), } \n
-        {\x14\xaeG\xe1z\x84?\x00\x00\x00\...00\x00"
     https://numpy.org/doc/1.13/neps/npy-format.html
     """
 

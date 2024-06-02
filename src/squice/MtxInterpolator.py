@@ -13,10 +13,9 @@ class MtxInterpolator(ABC):
     """
     Abstract class to define the methods for interpolation of a 3d numpy matrix.
     There are 3 methods of wrapping the data if it is out of bounds:
-    - cap : it is simply fixed at the bounds if it goes beyond
-    - periodic: it loops to make it a periodic shape eg 3.1 becomes 0.1 if the max is 3
-    - mirror: the edges reflect back, best only with small bleeds in the edge
-
+    cap : it is simply fixed at the bounds if it goes beyond
+    periodic: it loops to make it a periodic shape eg 3.1 becomes 0.1 if the max is 3
+    mirror: the edges reflect back, best only with small bleeds in the edge
 
     """
 
