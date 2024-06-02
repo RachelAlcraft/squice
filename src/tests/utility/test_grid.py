@@ -8,10 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent), ""))
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent), ""))
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent), "squice"))
 sys.path.append(os.path.join(os.path.dirname(Path(__file__).parent.parent.parent), ""))
-from squice import DataLoaders as dl  # noqa: E402
-from squice import MtxInterpolator as mi  # noqa: E402
 from squice import GridMaker as gm  # noqa: E402
-from squice import SpaceTransform as sp  # noqa: E402
 
 
 DIR = dirname(abspath(__file__))
@@ -40,8 +37,8 @@ def test_grid_unit():
         print(slice_grid.matrix)
         print(slice_grid.shape())
         assert True, "Should have failed"
-    except:
-        print("Correctly fails < 2)")
+    except Exception as e:
+        print("Correctly fails < 2)", e)
 
     # 3x3 lose a point
     slice_grid = grid.get_unit_grid(3, 6)

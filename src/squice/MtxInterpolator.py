@@ -6,7 +6,6 @@ from abc import ABC, abstractmethod
 from .DataLoaders import NumpyNow
 from scipy.interpolate import RegularGridInterpolator
 import numpy as np
-import math
 
 
 ####################################################################################
