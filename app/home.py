@@ -15,9 +15,11 @@ st.write(
 numerical matrices. These matrices can be any kind of numerical data, including data or
 some kind of data in space.
 
-The documentation for the library classes and functions can be found at [pydoctor squice library doc](https://rachelalcraft.github.io/squice/)
+The documentation for the library classes and functions can be found at
+[pydoctor squice library doc](https://rachelalcraft.github.io/squice/)
 
-Issues can be raised here [squice github issues](https://github.com/RachelAlcraft/squice/issues)
+Issues can be raised here
+[squice github issues](https://github.com/RachelAlcraft/squice/issues)
 
 The library is on pypi: [squice on pypi](https://pypi.org/project/squice/)
 
@@ -34,8 +36,9 @@ The example page gives the ability to load or define matrix data and navigate
 the data with slices and interpolation choices. All code is given so you can replicate
 the functionality in your own scripts.
 
-*The ethos of this [scientific library structure]
-(https://github.com/RachelAlcraft/app-lib-py) is to use a functional app like
+*The ethos of this
+[scientific library structure](https://github.com/RachelAlcraft/app-lib-py)
+is to use a functional app like
 this to demonstrate the python library with all code given, democratising use of the
 tool across user groups of different resources and expertise.*
 
@@ -61,3 +64,4 @@ st.caption(
     """~~ ~~ ~~ Contact: [Rachel by email](mailto:raye.alcraft.dev@gmail.com),
 :copyright: 2024 ~~ ~~ ~~"""
 )
+"---"
