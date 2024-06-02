@@ -2,6 +2,7 @@
 GridMaker: makes a grid or chunk of points given the secified size and samples
 
 """
+
 from . import Matrix3d as d3
 
 
